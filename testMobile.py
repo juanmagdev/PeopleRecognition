@@ -2,20 +2,6 @@ import cv2
 import requests
 import base64
 
-# video = cv2.VideoCapture("rtsp://admin:admin@192.168.1.119:1935") # 0: webcam
-
-
-# while True:
-#     ret, frame = video.read()
-#     cv2.imshow('RTSP', frame)
-#     k = cv2.waitKey(1)
-#     if k == ord('q'):
-#         break
-
-# video.release()
-# cv2.destroyAllWindows()
-
-# import winsound
 cam = cv2.VideoCapture("rtsp://admin:admin@192.168.1.119:1935")
 server_url = 'http://localhost:3001/api/upload'  
 while cam.isOpened():
@@ -28,12 +14,15 @@ while cam.isOpened():
     dilated = cv2.dilate(thresh, None, iterations=3)
     contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    response = requests.post(server_url, files={'image': frame1})
-    # Codifica el frame1 como una cadena base64
-    # # Envia la solicitud POST con la imagen codificada
-    # _, img_encoded = cv2.imencode('.jpg', frame1)
-    # image_base64 = base64.b64encode(img_encoded).decode('utf-8')
-    # response = requests.post(server_url, data={'image': image_base64})
+    # guardo en un archivo la imagen
+    cv2.imwrite('image.jpg', frame1)
+    # guardo en un txt el base64 de la imagen
+    with open("image.jpg", "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+
+
+    response = requests.post(server_url, files={'image': ('image.jpg', encoded_string)})
+
 
     if response.status_code != 200:
         raise Exception('Error: {}'.format(response.status_code))
