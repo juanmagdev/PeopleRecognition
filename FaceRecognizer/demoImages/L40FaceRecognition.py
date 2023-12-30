@@ -39,3 +39,4 @@ for root,dirs, files in os.walk(image_dir):
         cv2.moveWindow('Picture',0,0)
         if cv2.waitKey(0)==ord('q'):
             cv2.destroyAllWindows()
+print('Tulijn')
