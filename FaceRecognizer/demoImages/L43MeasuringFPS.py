@@ -21,6 +21,7 @@ timeStamp=time.time()
 
 while True:
     _,frame=cam.read()
+    
     frameSmall=cv2.resize(frame,(0,0),fx=scaleFactor,fy=scaleFactor)
     frameRGB=cv2.cvtColor(frameSmall,cv2.COLOR_BGR2RGB)
     facePositions=face_recognition.face_locations(frameRGB,model='cnn') #Default hog (simpler, for raspberry) CNN much more sophisticated
