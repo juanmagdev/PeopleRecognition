@@ -64,37 +64,39 @@ while True:
         if confidence > args.thr: # Filter prediction 
             class_id = int(detections[0, 0, i, 1]) # Class label
 
-            # Object location 
-            xLeftBottom = int(detections[0, 0, i, 3] * cols) 
-            yLeftBottom = int(detections[0, 0, i, 4] * rows)
-            xRightTop   = int(detections[0, 0, i, 5] * cols)
-            yRightTop   = int(detections[0, 0, i, 6] * rows)
+            if class_id==15:
+
+                # Object location 
+                xLeftBottom = int(detections[0, 0, i, 3] * cols) 
+                yLeftBottom = int(detections[0, 0, i, 4] * rows)
+                xRightTop   = int(detections[0, 0, i, 5] * cols)
+                yRightTop   = int(detections[0, 0, i, 6] * rows)
             
-            # Factor for scale to original size of frame
-            heightFactor = frame.shape[0]/300.0  
-            widthFactor = frame.shape[1]/300.0 
-            # Scale object detection to frame
-            xLeftBottom = int(widthFactor * xLeftBottom) 
-            yLeftBottom = int(heightFactor * yLeftBottom)
-            xRightTop   = int(widthFactor * xRightTop)
-            yRightTop   = int(heightFactor * yRightTop)
-            # Draw location of object  
-            cv2.rectangle(frame, (xLeftBottom, yLeftBottom), (xRightTop, yRightTop),
-                          (0, 255, 0))
+                # Factor for scale to original size of frame
+                heightFactor = frame.shape[0]/300.0  
+                widthFactor = frame.shape[1]/300.0 
+                # Scale object detection to frame
+                xLeftBottom = int(widthFactor * xLeftBottom) 
+                yLeftBottom = int(heightFactor * yLeftBottom)
+                xRightTop   = int(widthFactor * xRightTop)
+                yRightTop   = int(heightFactor * yRightTop)
+                # Draw location of object  
+                cv2.rectangle(frame, (xLeftBottom, yLeftBottom), (xRightTop, yRightTop),
+                            (0, 255, 0))
 
-            # Draw label and confidence of prediction in frame resized
-            if class_id in classNames:
-                label = classNames[class_id] + ": " + str(confidence)
-                labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+                # Draw label and confidence of prediction in frame resized
+                if class_id in classNames:
+                    label = classNames[class_id] + ": " + str(confidence)
+                    labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
 
-                yLeftBottom = max(yLeftBottom, labelSize[1])
-                cv2.rectangle(frame, (xLeftBottom, yLeftBottom - labelSize[1]),
-                                     (xLeftBottom + labelSize[0], yLeftBottom + baseLine),
-                                     (255, 255, 255), cv2.FILLED)
-                cv2.putText(frame, label, (xLeftBottom, yLeftBottom),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0))
+                    yLeftBottom = max(yLeftBottom, labelSize[1])
+                    cv2.rectangle(frame, (xLeftBottom, yLeftBottom - labelSize[1]),
+                                        (xLeftBottom + labelSize[0], yLeftBottom + baseLine),
+                                        (255, 255, 255), cv2.FILLED)
+                    cv2.putText(frame, label, (xLeftBottom, yLeftBottom),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0))
 
-                print(label) #print class and confidence
+                    print(label) #print class and confidence
 
     cv2.namedWindow("frame", cv2.WINDOW_NORMAL)
     cv2.imshow("frame", frame)
