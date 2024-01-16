@@ -62,15 +62,15 @@ net = cv2.dnn.readNetFromCaffe(args.prototxt, args.weights)
 
 # Email configuration
 sender_email = "alarma970@gmail.com"
-receiver_email = "manuelrr91@gmail.com"
-email_password = "Cuidao!:0"
+receiver_email = "alarma970@gmail.com"
+email_password = "agmn igzg auqf pang "
 
 # Flag and time tracking variables
 email_sent = False
 last_email_time = time.time()  # Initialize with the current time
 
 # Define the maximum time allowed between emails (in seconds)
-max_time_without_detection = 300  # 5 minutes
+max_time_without_detection = 5  # 5 minutes
 
 while True:
     ret, frame = cap.read()
@@ -86,7 +86,7 @@ while True:
     for i in range(detections.shape[2]):
         confidence = detections[0, 0, i, 2]
 
-        if confidence > args.thr and confidence >=0.95:
+        if confidence > args.thr and confidence >=0.8:
             class_id = int(detections[0, 0, i, 1])
 
             if class_id == 15:  # Class 15 corresponds to 'person'
@@ -134,7 +134,7 @@ while True:
     cv2.imshow("frame", frame)
 
     # Check for the 'ESC' key to exit the loop
-    if cv2.waitKey(1) == 27:
+    if cv2.waitKey(1) >= 0:
         break
 
 # Release the video capture object
