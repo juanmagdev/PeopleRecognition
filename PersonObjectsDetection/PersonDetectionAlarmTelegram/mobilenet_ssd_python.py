@@ -6,6 +6,8 @@ import time
 import asyncio
 import os
 import base64
+from io import BytesIO
+from PIL import Image
 
 telegram_bot_token = ''
 bot = Bot(token=telegram_bot_token)
@@ -14,10 +16,25 @@ message_text = 'Cuidao que te roban'
 
 async def send_telegram_message(text, image_base64):
     try:
-        await bot.send_document(chat_id=chat_id, document=base64.b64decode(image_base64), caption=text)
+        # Decode base64 image data
+        image_binary = base64.b64decode(image_base64)
+
+        # Convert binary image data to a BytesIO stream
+        image_stream = BytesIO(image_binary)
+
+        # Open the image using PIL (Python Imaging Library)
+        image = Image.open(image_stream)
+
+        # Create a new BytesIO stream to save the image as JPEG
+        jpeg_stream = BytesIO()
+        image.save(jpeg_stream, format='JPEG')
+
+        # Send the JPEG image as a document with the specified caption
+        await bot.send_document(chat_id=chat_id, document=InputFile(jpeg_stream.getvalue(), filename='image.jpg'), caption=text)
+
     except Exception as e:
         print(f"Error sending message: {e}")
-
+        
 async def main():
     # Open video file or capture device.
     if args.video:
@@ -88,9 +105,10 @@ async def main():
             _, img_encoded = cv2.imencode('.jpg', frame)
             image_base64 = base64.b64encode(img_encoded).decode('utf-8')
 
+
+
             # Send the image as a document
             await send_telegram_message(message_text, image_base64)
-
             message_sent = True  # Set the flag to True after sending the email
             last_email_time = time.time()  # Update the last sent time
 
