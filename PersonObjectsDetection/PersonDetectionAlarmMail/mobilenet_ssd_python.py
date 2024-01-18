@@ -28,9 +28,6 @@ def send_email(sender_email, password, receiver_email, subject, body, attachment
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, msg.as_string())
 
-# Import the necessary libraries
-
-
 # Construct the argument parse
 parser = argparse.ArgumentParser(description='Script to run MobileNet-SSD object detection network ')
 parser.add_argument("--video", help="path to video file. If empty, the camera's stream will be used")
@@ -70,7 +67,7 @@ email_sent = False
 last_email_time = time.time()  # Initialize with the current time
 
 # Define the maximum time allowed between emails (in seconds)
-max_time_without_detection = 5  # 5 minutes
+max_time_without_detection = 5  # Seconds
 
 while True:
     ret, frame = cap.read()
