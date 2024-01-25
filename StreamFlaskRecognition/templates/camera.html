@@ -7,10 +7,59 @@
 </head>
 <body>
     <h1>Live streaming</h1>
-    <div>
-        <img src="{{ url_for('video') }}" width="50%"/>
-    </div>
     
+    <!-- Add a form for adding a new person -->
+    <form action="{{ url_for('add_person') }}" method="post" enctype="multipart/form-data">
+        <label for="personName">Person Name:</label>
+        <input type="text" id="personName" name="personName" required>
+        
+        <label for="imageFile">Upload Image:</label>
+        <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+    
+        <button type="submit">Add Person</button>
+    </form>
+    
+
+    <label>
+        <input type="checkbox" id="facialDetectionSwitch" onchange="toggleFacialDetection()">
+        Apply Facial Detection
+    </label>
+
+    <label>
+        <input type="checkbox" id="peopleDetectionSwitch" onchange="togglePeopleDetection()">
+        Apply People Detection
+    </label>
+
+    <div>
+        <img id="videoStream" src="{{ url_for('video') }}" width="50%"/>
+    </div>
+
+    <script>
+        // JavaScript function to toggle facial detection
+        function toggleFacialDetection() {
+            var video = document.getElementById("videoStream");
+            var switchCheckbox = document.getElementById("facialDetectionSwitch");
+
+            // Append the query parameter based on the checkbox state
+            var url = switchCheckbox.checked ? "{{ url_for('video', facial_detection='on') }}" : "{{ url_for('video') }}";
+
+            // Update the video source
+            video.src = url;
+        }
+    </script>
+
+    <script>
+        // JavaScript function to toggle people detection
+        function togglePeopleDetection() {
+            var video = document.getElementById("videoStream");
+            var switchCheckbox = document.getElementById("peopleDetectionSwitch");
+
+            // Append the query parameter based on the checkbox state
+            var url = switchCheckbox.checked ? "{{ url_for('video', people_detection='on') }}" : "{{ url_for('video') }}";
+
+            // Update the video source
+            video.src = url;
+        }
+    </script>
 </body>
 </html>
-
