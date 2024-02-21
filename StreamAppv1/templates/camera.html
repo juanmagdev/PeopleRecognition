@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videostreaming</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+
+<body>
+    <h1>Live streaming</h1>
+    
+    
+    <div class="options-container">
+        <label>
+            <input type="checkbox" id="peopleDetectionSwitch" onchange="togglePeopleDetection()">
+            Apply People Detection
+        </label>
+    
+        <label>
+            <input type="checkbox" id="emailAlarmSwitch" onchange="toggleEmailAlarm()">
+            Activate alarm
+        </label>
+    </div>
+
+    <div>
+        <img id="videoStream" src="{{ url_for('video') }}" width="50%" />
+    </div>
+
+    <script>
+        // JavaScript function to toggle people detection
+        function togglePeopleDetection() {
+            var video = document.getElementById("videoStream");
+            var switchCheckbox = document.getElementById("peopleDetectionSwitch");
+
+            // Append the query parameter based on the checkbox state
+            var url = switchCheckbox.checked ? "{{ url_for('video', people_detection='on') }}" : "{{ url_for('video') }}";
+
+            // Update the video source
+            video.src = url;
+        }
+
+    // Modify toggleEmailAlarm() function to update the email alarm state only
+        function toggleEmailAlarm() {
+                var switchCheckbox = document.getElementById("emailAlarmSwitch");
+                // Update the email alarm state based on the checkbox state
+                email_alarm_enabled = switchCheckbox.checked;
+
+                // Check the current state of people detection
+                var peopleDetectionSwitch = document.getElementById("peopleDetectionSwitch");
+                var peopleDetectionEnabled = peopleDetectionSwitch.checked;
+
+                // Append both query parameters based on the checkbox states
+                var url = "{{ url_for('video') }}";
+                if (email_alarm_enabled) {
+                    url += "?email_alarm=on";
+                }
+                if (peopleDetectionEnabled) {
+                    url += email_alarm_enabled ? "&people_detection=on" : "?people_detection=on";
+                }
+
+                // Update the video source
+                var video = document.getElementById("videoStream");
+                video.src = url;
+            }
+    </script>
+</body>
+
+</html>

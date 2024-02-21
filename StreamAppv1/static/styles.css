@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e2e2e2;
+    text-align: center;
+}
+
+.container {
+    padding: 10px;
+    /* Reduce padding for smaller screens */
+}
+
+h1 {
+    font-size: 28px;
+    /* Decrease font size for smaller screens */
+    margin-bottom: 20px;
+}
+
+form {
+    margin-bottom: 15px;
+    /* Decrease margin for smaller screens */
+}
+
+label {
+    font-size: 18px;
+    /* Decrease font size for smaller screens */
+    margin-bottom: 5px;
+    /* Decrease margin for smaller screens */
+}
+
+input[type="file"] {
+    margin-bottom: 10px;
+}
+
+#videoStream {
+    max-width: 100%;
+    /* Ensure video fills the screen width */
+    height: auto;
+    margin-top: 15px;
+    /* Decrease margin for smaller screens */
+}
+
+.options-container {
+    flex-wrap: wrap;
+    /* Allow options to wrap on smaller screens */
+}
+
+.options-container label {
+    margin-right: 10px;
+    /* Decrease spacing between options for smaller screens */
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    /* Increase checkbox size slightly for better visibility */
+}
