@@ -1,14 +1,14 @@
 # PeopleRecognition
 
-## Utilidades
-https://www.notion.so/DeepCamera-Recognition-92f77ff2017f4f68bd9ab9dd0bc8c3c0
+This repository contains various modules for people recognition and detection using Python. Below is a brief overview of each folder in the project and a quick installation guide.
 
-## Hoja de ruta
- - [x] Conectar rtsp a python
- - [ ] Hacer funcionar el servidor y la web. Ver en tiempo real lo que ve la camara desde la web, ajustar ratio de refresco bla bla
- - [ ] Anadir deteccion de movimientos en la web (ya hecho en python). Ajustarlo desde la web?
- - [ ] Anadir al python movidas de reconocimiento facial de personas  
-## Security App
-Instalar los reuire de server.js, instalar las librerias de app.jsx
+## Folder Structure
 
-Para runnearlo, hacer node server.js en la ruta del server. Runnear el python. Esto no deber dar errores. Luego runnear el app.jsx con node start y se abrira la pagina.
+- **FaceRecognizer**: Contains scripts and sample images for facial recognition tasks.
+- **FrontalFaceDetection**: Focuses on detecting faces from frontal images using pre-trained models.
+- **PersonObjectsDetection**: Includes scripts for detecting people and other objects in images or videos.
+- **StreamAppv1**: A streaming application that captures and processes video streams for recognition tasks.
+- **StreamFlask**: A Flask-based application for streaming and processing video feeds.
+- **StreamFlaskRecognition**: Extends the `StreamFlask` module to include facial recognition capabilities.
+- **security-app**: Contains a security-focused application that integrates real-time recognition and detection features.
+
